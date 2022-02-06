@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2, 
+    "name": "Calculator",
+    "version": "1.0",
+
+    "description": "Adds a calculator pop-up to your browser.",
+
+    "icons": {
+        "48": "icons/icons8-calculator-48.png"
+    },
+
+    "browser_action": {
+        "default_icon": "icons/icons8-calculator-32.png",
+        "default_title": "Calculator",
+        "default_popup": "popup/calculator.html"
+    }
+}
