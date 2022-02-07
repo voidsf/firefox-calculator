@@ -1,8 +1,9 @@
-var storedValue = 0;
-var currentOperation = 0;
+var storedValue = NaN;
+var currentOperation = " ";
 var displayValue = 0;
 var decimalPoint = false;
 
+var memory = 0;
 
 
 var display = document.getElementById("currentValue");
@@ -22,6 +23,12 @@ function updateValue(e) {
 }
 
 function operation(e) {
+    if (currentOperation != " " && !e.target.innerHTML.includes("=")){
+        var temp = displayValue;
+        displayValue = calculate(storedValue, temp, currentOperation);
+        storedValue = temp;
+    }
+
     var newValue = 0;
     if (e.target.id == "divide") {
         currentOperation = "&divide;";
@@ -66,6 +73,25 @@ function calculate(val1, val2, operation){
     return 0;
 }
 
+function modify(event){
+    if (event.target.id == "ce"){
+        storedValue = 0;
+        displayValue = 0;
+        currentOperation = " ";
+    }
+    else if (event.target.id == "c"){
+        displayValue = 0;
+    }
+    else if (event.target.id == "ms"){
+        memory = displayValue;
+    }
+    else if (event.target.id == "mr"){
+        displayValue = memory;
+    }
+
+    updateDisplay();
+}
+
 function updateDisplay(){
     display.innerHTML = displayValue.toString().slice(-8);
     prevDisplay.innerHTML = storedValue.toString().slice(-8) + " " + currentOperation.toString();
@@ -86,7 +112,9 @@ function listenForClicks() {
                 updateDisplay();
             }
         }
-        
+        else if (e.target.classList.contains("mod")){
+            modify(e);
+        }
     });
 }
 
